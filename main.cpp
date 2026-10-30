@@ -1,11 +1,13 @@
 #include <iostream>
 #include <string>
+#include <random>
 
 using namespace std;
 
 int randomNumGenerator() {
-    srand(time(nullptr));
-    return rand() % 100 + 1;
+    static mt19937 generator(random_device{}());
+    uniform_int_distribution<int> dist(1,100);
+    return dist(generator);
 }
 
 string higherOrLower(int guess, int randomNum) {
@@ -20,7 +22,7 @@ string higherOrLower(int guess, int randomNum) {
     return convo;
 }
 
-void numberChecker(int attempts, int randomNum, int guess) {
+void numberChecker(int& attempts, int randomNum, int guess) {
     while (true) {
         attempts++;
         int nextTryGuess;
