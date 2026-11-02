@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 #include <random>
+#include <limits>
+
 
 using namespace std;
 
@@ -10,13 +12,23 @@ int randomNumGenerator() {
     return dist(generator);
 }
 
+int readInt() {
+    int value;
+    while (!(cin >> value)) {
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "Please type a valid number!\n";
+    }
+    return value;
+}
+
 string higherOrLower(int guess, int randomNum) {
     string convo;
     if (guess > randomNum) {
         convo = "Too high! Try again!\n";
     } else if (guess < randomNum) {
         convo = "Too low! Try again!\n";
-    } else if (guess == randomNum) {
+    } else {
         convo = "Correct! You won!\n";
     }
     return convo;
@@ -39,17 +51,17 @@ int main() {
         int attempts = 0;
         int randomNum = randomNumGenerator();
         int guess;
-        cout << "I have chosen a number from 1 and 100.\nTry to guess it!\n\n";
+        cout << "I have chosen a number from 1 to 100.\nTry to guess it!\n\n";
         cout << "Your guess: \n";
 
-        cin >> guess;
+        guess = readInt();
         numberChecker(attempts, randomNum, guess);
 
         cout << "Number of attempts: " << attempts << endl;
         while (true) {
             cout << "Try again? (Yes/No): " << endl;
             cin >> retry;
-            if (retry == "Yes" || retry == "No") { break; };
+            if (retry == "Yes" || retry == "No") { break; }
             cout << "Please type a valid answer!\n";
         }
         if (retry == "No") {
