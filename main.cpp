@@ -34,14 +34,23 @@ string higherOrLower(int guess, int randomNum) {
     return convo;
 }
 
-void numberChecker(int& attempts, int randomNum, int guess) {
+void numberChecker(int& attempts, int randomNum) {
     while (true) {
+        int guess;
+
+        cout << "Your guess: \n";
+        guess = readInt();
+
+        if (guess < 1 || guess > 100) {
+            cout << "Please enter a number between 1 and 100!\n";
+            continue;
+        }
         attempts++;
-        int nextTryGuess;
-        cout << higherOrLower(guess, randomNum);
-        if (guess == randomNum) { break; }
-        cin >> nextTryGuess;
-        guess = nextTryGuess;
+        cout << higherOrLower(guess, randomNum) << endl;
+
+        if (guess == randomNum) {
+            break;
+        }
     }
 }
 
@@ -50,12 +59,9 @@ int main() {
         string retry;
         int attempts = 0;
         int randomNum = randomNumGenerator();
-        int guess;
         cout << "I have chosen a number from 1 to 100.\nTry to guess it!\n\n";
-        cout << "Your guess: \n";
+        numberChecker(attempts, randomNum);
 
-        guess = readInt();
-        numberChecker(attempts, randomNum, guess);
 
         cout << "Number of attempts: " << attempts << endl;
         while (true) {
